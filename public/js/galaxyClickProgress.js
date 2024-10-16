@@ -8,7 +8,7 @@ galaxy.addEventListener('touchend', galaxyUnclicked)
 
 let maxClicks = 10
 let timeId = null
-let imageClickable = true
+let galaxyClickable = true
 const incrementalFactor = 3
 let initialProgressWidth = progress.getBoundingClientRect().width
 let adjustementValue = initialProgressWidth / maxClicks
