@@ -8,6 +8,7 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <title>Galaxy Tap</title>
 </head>
+
 <body>
     <div class="container">
         <main class="main">
@@ -26,5 +27,7 @@
             </div>
         </main>
     </div>
-</body>
+    <script src="./js/galaxyClickProgress.js"></script>
+        </body>
+
 </html>
