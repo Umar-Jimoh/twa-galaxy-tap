@@ -1,4 +1,4 @@
-const galaxy = document.getElementById("image")
+const galaxy = document.getElementById("button")
 const progress = document.getElementById('progress')
 
 galaxy.addEventListener('mousedown', (e) => galaxyClicked(e))
@@ -19,7 +19,7 @@ function galaxyClicked(event) {
         return
     } 
 
-    galaxy.classList.add('image-small')
+    galaxy.classList.add('button-small')
     progress.style.width = `${progress.getBoundingClientRect().width - adjustementValue}px`
     let adjustedProgressWidth = parseFloat(progress.style.width)
     points.innerText = parseInt(points.innerText) + 1
@@ -32,7 +32,7 @@ function galaxyClicked(event) {
 }
 
 function galaxyUnclicked() {
-    galaxy.classList.remove('image-small')
+    galaxy.classList.remove('button-small')
 }
 
 function updateProgressBar(adjustedProgressWidth) {
