@@ -15,7 +15,7 @@
             <p class="username" id="username">john</p>
             <span class="points" id="points">0</span>
             <div class="image-container">
-                <img class="image" id="image" src="./images/button.jpg" alt="space image">
+                <img class="button" id="button" src="./images/button.jpg" alt="space image">
             </div>
             <div class="footer">
                 <div class="progress-bar" id="progress-bar">
