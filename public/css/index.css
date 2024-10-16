@@ -1,0 +1,98 @@
+/* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    font-size: 62.5%;
+    color: white;
+}
+
+/* Container */
+.container {
+    width: 100%;
+    height: 100vh;
+    max-width: 760px;
+    margin: auto;
+    padding: 20px;
+    background-color: #212020;
+}
+
+/* Main Content */
+.main {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/* username */
+.username {
+    margin-bottom: 1rem;
+    font-size: 1.6rem;
+}
+
+/* points */
+.points {
+    font-size: 1.8rem;
+    margin-bottom: 6.5rem;
+}
+
+/* Image */
+.image-container{
+    height: 240px;
+    /* margin-bottom: 4.5rem; */
+}
+
+.image {
+    width: 240px;
+    height: inherit;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 1px solid rgb(145, 94, 145);
+    transform-origin: center center; 
+    transition: transform 0.1s;
+    touch-action: manipulation; 
+    -webkit-tap-highlight-color: transparent;
+}
+
+.image-small {
+    transform: scale(0.95);
+}
+
+.footer {
+    position: fixed;
+    bottom: 30px;
+    margin: auto;
+    padding: 0 10px;
+    width: 100%;
+    max-width: 760px;
+}
+
+.progress-bar{
+    border-radius: 10px;
+    margin-top: auto;
+    width: 100%;
+    height: 15px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border: 1px solid rgb(165, 41, 165);
+}
+
+.progress {
+    display: inline-block;
+    background-color: rgb(165, 41, 165);
+    width: 100%;
+    height: 100%;
+}
+
+.invite_button {
+    margin-top: auto;
+    width: 100%;
+    height: 40px;
+    font-size: medium;
+    font-weight: 400;
+}
