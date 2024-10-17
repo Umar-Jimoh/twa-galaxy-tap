@@ -28,6 +28,7 @@
         </main>
     </div>
     <script src="./js/galaxyClickProgress.js"></script>
+    <script src="./js/handleUrlFragment.js"></script>
         </body>
 
 </html>
