@@ -38,15 +38,12 @@ class DBConnection
         return self::$instance;
     }
 
-    public function getConnection() {
+    public function getConnection()
+    {
         return $this->conn;
     }
-
 
     function __clone() {}
 
     function __wakeup() {}
 }
-
-$db = DBConnection::GetInstance();
-$db->getConnection();
