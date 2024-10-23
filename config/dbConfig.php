@@ -1,5 +1,5 @@
 <?php
-require '../vendor/autoload.php';
+require '../../vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -12,6 +12,7 @@ class DBConnection
     private $password;
     private $dbname;
     protected $conn;
+    private static $connInfo;
 
     private function __construct()
     {
@@ -19,13 +20,14 @@ class DBConnection
         $this->username = $_ENV["DB_USERNAME"];
         $this->password = $_ENV["DB_PASSWORD"];
         $this->dbname = $_ENV["DB_NAME"];
+        self::$connInfo = ['status' => null, 'error' => null];
 
         try {
             $this->conn = new PDO("mysql:host=$this->servername;dbname=$this->dbname", $this->username, $this->password);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "Connected successfully";
+            self::$connInfo = ['status' => 'success', 'error' => null];
         } catch (PDOException $e) {
-            echo "Connection failed" . $e->getMessage();
+            self::$connInfo = ['status' => 'failed', 'error' => $e->getMessage()];
         }
     }
 
@@ -41,6 +43,11 @@ class DBConnection
     public function getConnection()
     {
         return $this->conn;
+    }
+
+    public static function getConnectionInfo()
+    {
+        return self::$connInfo;
     }
 
     function __clone() {}
