@@ -8,8 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     parse_str($dataArray['webAppData'], $output);
 
-    file_put_contents('../../logs/webhook.log', print_r($output, true), FILE_APPEND);
-
     // Database
     try {
         $db = new DB();
