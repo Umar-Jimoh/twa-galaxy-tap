@@ -1,5 +1,5 @@
 <?php
-require '../model/database.php';;
+require '../model/DBModel.php';
 
 class HandleWebFragmentContr
 {
@@ -7,7 +7,7 @@ class HandleWebFragmentContr
 
     public function __construct()
     {
-        $this->db = new DB();
+        $this->db = new DBModel();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->processRequest();
         }

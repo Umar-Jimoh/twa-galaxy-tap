@@ -2,7 +2,7 @@
 require '../../config/dbconfig.php';
 require '../view/jsonview.php';
 
-class DB extends DBConnection
+class DBModel extends DBConnection
 {
     private $dbInstance;
     protected $conn;
