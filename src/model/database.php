@@ -1,5 +1,6 @@
 <?php
 require '../../config/dbconfig.php';
+require '../view/jsonview.php';
 
 class DB extends DBConnection
 {
@@ -28,12 +29,11 @@ class DB extends DBConnection
                 $language_code = $user->language_code;
 
                 // $stmt->execute();
-                echo json_encode(['status' => 'success', 'data' => ($user)]);
             } catch (PDOException $e) {
-                echo json_encode(['status' => 'failed', 'error' => $e->getMessage()]);
+                JsonView::render(['status' => 'failed', 'error' => $e->getMessage()]);
             }
         } else {
-            echo json_encode(['status' => 'failed', 'error' => $connInfo['error']]);
+            JsonView::render(['status' => 'failed', 'error' => $connInfo['error']]);
         }
     }
 }

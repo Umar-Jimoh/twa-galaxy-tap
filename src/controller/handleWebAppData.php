@@ -1,6 +1,5 @@
 <?php
-require '../model/database.php';
-header('Content-Type: application/json');
+require '../model/database.php';;
 
 class HandleWebFragment
 {
@@ -24,6 +23,7 @@ class HandleWebFragment
             $user = json_decode($output['user']);
 
             $this->db->addUser($user);
+            JsonView::render(['success' => 'success']);
         } catch (PDOException $e) {
             echo json_encode(['status' => 'failed', 'error' => $e->getMessage()]);
         }
