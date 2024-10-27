@@ -4,18 +4,23 @@ require '../view/jsonview.php';
 
 class DB extends DBConnection
 {
-    public function __construct() {}
+    private $dbInstance;
+    protected $conn;
+    private $connInfo;
+
+    public function __construct()
+    {
+        $this->dbInstance = self::GetInstance();
+        $this->conn = $this->dbInstance->getConnection();
+        $this->connInfo = self::getConnectionInfo();
+    }
 
     public function addUser($user)
     {
-        $dbInstance = self::GetInstance();
-        $conn = $dbInstance->getConnection();
-        $connInfo = self::getConnectionInfo();
-
-        if ($connInfo['status'] === 'success') {
+        if ($this->connInfo['status'] === 'success') {
             try {
                 $sql = "INSERT INTO Users(id, username, first_name, language_code) VALUES (:id, :username, :first_name, :language_code)";
-                $stmt = $conn->prepare($sql);
+                $stmt = $this->conn->prepare($sql);
 
                 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
                 $stmt->bindParam(':username', $username, PDO::PARAM_STR);
@@ -33,7 +38,7 @@ class DB extends DBConnection
                 JsonView::render(['status' => 'failed', 'error' => $e->getMessage()]);
             }
         } else {
-            JsonView::render(['status' => 'failed', 'error' => $connInfo['error']]);
+            JsonView::render(['status' => 'failed', 'error' => $this->connInfo['error']]);
         }
     }
 }
