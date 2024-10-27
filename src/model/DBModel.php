@@ -1,6 +1,6 @@
 <?php
 require '../../config/DBConfig.php';
-require '../view/jsonview.php';
+require '../view/JsonView.php';
 
 class DBModel extends DBConfig
 {
