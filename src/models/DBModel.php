@@ -22,16 +22,16 @@ class DBModel extends DBConfig
                 $sql = "INSERT INTO Users(id, username, first_name, language_code) VALUES (:id, :username, :first_name, :language_code)";
                 $stmt = $this->conn->prepare($sql);
 
-                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-                $stmt->bindParam(':username', $username, PDO::PARAM_STR);
-                $stmt->bindParam(':first_name', $first_name, PDO::PARAM_STR);
-                $stmt->bindParam(':language_code', $language_code, PDO::PARAM_STR);
-
                 // Set value from the user object
                 $id = $user->id;
                 $username = $user->username;
                 $first_name = $user->first_name;
                 $language_code = $user->language_code;
+
+                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+                $stmt->bindParam(':first_name', $first_name, PDO::PARAM_STR);
+                $stmt->bindParam(':language_code', $language_code, PDO::PARAM_STR);
 
                 // $stmt->execute();
                 JsonView::render(['success' => 'success']);
