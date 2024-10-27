@@ -1,7 +1,7 @@
 <?php
 require '../model/database.php';;
 
-class HandleWebFragment
+class HandleWebFragmentContr
 {
     private $db;
 
@@ -30,4 +30,4 @@ class HandleWebFragment
     }
 }
 
-new HandleWebFragment();
+new HandleWebFragmentContr();
