@@ -34,6 +34,7 @@ class DBModel extends DBConfig
                 $language_code = $user->language_code;
 
                 // $stmt->execute();
+                JsonView::render(['success' => 'success']);
             } catch (PDOException $e) {
                 JsonView::render(['status' => 'failed', 'error' => $e->getMessage()]);
             }

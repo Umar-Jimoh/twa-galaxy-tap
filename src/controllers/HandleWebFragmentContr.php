@@ -23,7 +23,6 @@ class HandleWebFragmentContr
             $user = json_decode($output['user']);
 
             $this->db->addUser($user);
-            JsonView::render(['success' => 'success']);
         } catch (PDOException $e) {
             echo json_encode(['status' => 'failed', 'error' => $e->getMessage()]);
         }
