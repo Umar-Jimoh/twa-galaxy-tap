@@ -1,5 +1,5 @@
 <?php
-require '../model/DBModel.php';
+require '../models/DBModel.php';
 
 class HandleWebFragmentContr
 {

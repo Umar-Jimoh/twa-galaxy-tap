@@ -1,4 +1,4 @@
-const url = '/twa-galaxy-tap/src/controller/HandleWebFragmentContr.php'
+const url = '/twa-galaxy-tap/src/controllers/HandleWebFragmentContr.php'
 
 async function handleUrlFragment() {
     const urlFragment = window.location.hash.substring(1)
