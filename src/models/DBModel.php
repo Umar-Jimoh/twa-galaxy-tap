@@ -7,12 +7,39 @@ class DBModel extends DBConfig
     private $dbInstance;
     protected $conn;
     private $connInfo;
+    private $userInfo;
 
     public function __construct()
     {
         $this->dbInstance = self::GetInstance();
         $this->conn = $this->dbInstance->getConnection();
         $this->connInfo = self::getConnectionInfo();
+    }
+
+    public function getUser($user)
+    {
+        if ($this->connInfo['status'] === 'success') {
+            try {
+                $sql = "SELECT * FROM Users WHERE id = :id";
+                $stmt = $this->conn->prepare($sql);
+
+                $id = $user->id;
+                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $this->userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                if ($this->userInfo) {
+                    return $this->userInfo;
+                } else {
+                    $this->addUser($user);
+                }
+            } catch (PDOException $e) {
+                JsonView::render(['status' => 'failed', 'error' => $e->getMessage()]);
+            }
+        } else {
+            JsonView::render(['status' => 'failed', 'error' => $this->connInfo['error']]);
+        }
     }
 
     public function addUser($user)
@@ -33,7 +60,7 @@ class DBModel extends DBConfig
                 $stmt->bindParam(':first_name', $first_name, PDO::PARAM_STR);
                 $stmt->bindParam(':language_code', $language_code, PDO::PARAM_STR);
 
-                // $stmt->execute();
+                $stmt->execute();
                 JsonView::render(['success' => 'success']);
             } catch (PDOException $e) {
                 JsonView::render(['status' => 'failed', 'error' => $e->getMessage()]);

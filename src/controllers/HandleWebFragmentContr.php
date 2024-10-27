@@ -22,9 +22,12 @@ class HandleWebFragmentContr
             parse_str($dataArray['webAppData'], $output);
             $user = json_decode($output['user']);
 
-            $this->db->addUser($user);
+            $existingUser = $this->db->getUser($user);
+            if ($existingUser) {
+                JsonView::render($existingUser);
+            }
         } catch (PDOException $e) {
-            echo json_encode(['status' => 'failed', 'error' => $e->getMessage()]);
+            JsonView::render(['status' => 'failed', 'error' => $e->getMessage()]);
         }
     }
 }
