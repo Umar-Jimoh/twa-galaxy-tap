@@ -4,7 +4,7 @@ require '../../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-class DBConnection
+class DBConfig
 {
     private static $instance;
     private $servername;
@@ -34,7 +34,7 @@ class DBConnection
     public static function GetInstance()
     {
         if (self::$instance === null) {
-            self::$instance = new DBConnection();
+            self::$instance = new DBConfig();
         }
 
         return self::$instance;

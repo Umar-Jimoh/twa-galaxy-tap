@@ -1,8 +1,8 @@
 <?php
-require '../../config/dbconfig.php';
+require '../../config/DBConfig.php';
 require '../view/jsonview.php';
 
-class DBModel extends DBConnection
+class DBModel extends DBConfig
 {
     private $dbInstance;
     protected $conn;
