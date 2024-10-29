@@ -32,7 +32,7 @@ class DBModel extends DBConfig
                 if ($this->userInfo) {
                     return $this->userInfo;
                 } else {
-                    $this->addUser($user);
+                    return $this->addUser($user);
                 }
             } catch (PDOException $e) {
                 JsonView::render(['status' => 'failed', 'error' => $e->getMessage()]);
@@ -60,8 +60,9 @@ class DBModel extends DBConfig
                 $stmt->bindParam(':first_name', $first_name, PDO::PARAM_STR);
                 $stmt->bindParam(':language_code', $language_code, PDO::PARAM_STR);
 
-                $stmt->execute();
-                JsonView::render(['success' => 'success']);
+                if ($stmt->execute()) {
+                    return $this->getUser($user);
+                }
             } catch (PDOException $e) {
                 JsonView::render(['status' => 'failed', 'error' => $e->getMessage()]);
             }
