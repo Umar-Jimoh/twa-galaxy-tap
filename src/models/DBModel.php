@@ -72,7 +72,8 @@ class DBModel extends DBConfig
         }
     }
 
-    public function getUserPoints($id) { 
+    public function getUserPoints($id)
+    {
         if ($this->connInfo['status'] === 'success') {
             try {
                 $sql = "SELECT points FROM User_Points WHERE id = :id";
@@ -86,6 +87,29 @@ class DBModel extends DBConfig
 
                 if ($this->userPoints) {
                     return $this->userPoints;
+                } else {
+                    $this->addUserPoints($id);
+                }
+            } catch (PDOException $e) {
+                JsonView::render(['status' => 'failed', 'error' => $e->getMessage()]);
+            }
+        } else {
+            JsonView::render(['status' => 'failed', 'error' => $this->connInfo['error']]);
+        }
+    }
+
+    public function addUserPoints($id)
+    {
+        if ($this->connInfo['status'] === 'success') {
+            try {
+                $sql = "INSERT INTO User_Points (id) VALUES(:id)";
+                $stmt = $this->conn->prepare($sql);
+
+                $id = $id;
+                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+                if ($stmt->execute()) {
+                    return $this->getUserPoints($id);
                 }
             } catch (PDOException $e) {
                 JsonView::render(['status' => 'failed', 'error' => $e->getMessage()]);
