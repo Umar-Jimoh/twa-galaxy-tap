@@ -21,6 +21,7 @@ async function handleUrlFragment() {
         const data = await response.json();
         if (data.username) {
             document.getElementById('username').innerText = data.username
+            document.getElementById('points').innerText = data.user_points.points
         }
 
     } catch (e) {

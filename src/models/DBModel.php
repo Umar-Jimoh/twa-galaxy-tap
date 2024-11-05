@@ -8,6 +8,7 @@ class DBModel extends DBConfig
     protected $conn;
     private $connInfo;
     private $userInfo;
+    private $userPoints;
 
     public function __construct()
     {
@@ -62,6 +63,29 @@ class DBModel extends DBConfig
 
                 if ($stmt->execute()) {
                     return $this->getUser($user);
+                }
+            } catch (PDOException $e) {
+                JsonView::render(['status' => 'failed', 'error' => $e->getMessage()]);
+            }
+        } else {
+            JsonView::render(['status' => 'failed', 'error' => $this->connInfo['error']]);
+        }
+    }
+
+    public function getUserPoints($id) { 
+        if ($this->connInfo['status'] === 'success') {
+            try {
+                $sql = "SELECT points FROM User_Points WHERE id = :id";
+                $stmt = $this->conn->prepare($sql);
+
+                $id = $id;
+                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $this->userPoints = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                if ($this->userPoints) {
+                    return $this->userPoints;
                 }
             } catch (PDOException $e) {
                 JsonView::render(['status' => 'failed', 'error' => $e->getMessage()]);

@@ -2,7 +2,7 @@
 session_start();
 require '../models/DBModel.php';
 
-class HandleWebFragmentContr
+class HandleClickProgressContr
 {
     private $db;
 
@@ -20,19 +20,13 @@ class HandleWebFragmentContr
             $payload = file_get_contents('php://input');
             $dataArray = json_decode($payload, true);
 
-            parse_str($dataArray['webAppData'], $output);
-            $user = json_decode($output['user']);
+            $userPoints = $this->db->getUserPoints($_SESSION['id']);
 
-            $existingUser = $this->db->getUser($user);
-            if ($existingUser) {
-                $_SESSION['id'] = $existingUser['id'];
-                $existingUser['user_points'] = $this->db->getUserPoints($_SESSION['id']);
-                JsonView::render($existingUser);
-            }
+            JsonView::render(['status' => 'success', 'points' => $userPoints['points']]);
         } catch (PDOException $e) {
             JsonView::render(['status' => 'failed', 'error' => $e->getMessage()]);
         }
     }
 }
 
-new HandleWebFragmentContr();
+new HandleClickProgressContr();

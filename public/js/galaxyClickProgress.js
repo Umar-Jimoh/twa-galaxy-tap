@@ -27,7 +27,7 @@ function galaxyClicked(event) {
     if(timeId) {
         clearInterval(timeId)
     }
-
+    updateUserPointInDatabase(parseInt(points.innerText))
     updateProgressBar(adjustedProgressWidth)
 }
 
@@ -46,4 +46,25 @@ function updateProgressBar(adjustedProgressWidth) {
         timeId = null; // Reset timeId
     }
 }, 1000);
+}
+
+async function updateUserPointInDatabase(points) {
+    const url = '/twa-galaxy-tap/src/controllers/HandleClickProgressContr.php'
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+                },
+            body: JSON.stringify({'points': points}),
+        })
+    
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+    
+        const data = await response.json();
+    } catch (e) {
+        console.error('Error:', e)       
+    }
 }
