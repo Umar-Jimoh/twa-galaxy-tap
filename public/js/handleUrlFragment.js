@@ -19,7 +19,9 @@ async function handleUrlFragment() {
         }
 
         const data = await response.json();
-        console.log(data);
+        if (data.username) {
+            document.getElementById('username').innerText = data.username
+        }
 
     } catch (e) {
         console.error('Error:', e)
