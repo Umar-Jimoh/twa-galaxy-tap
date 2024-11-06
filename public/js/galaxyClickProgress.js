@@ -13,7 +13,7 @@ const incrementalFactor = 3
 let initialProgressWidth = progress.getBoundingClientRect().width
 let adjustementValue = initialProgressWidth / maxClicks
 
-function galaxyClicked(event) {
+async function galaxyClicked(event) {
     event.preventDefault()
     if (parseFloat(progress.style.width) <= adjustementValue) {
         return
@@ -22,12 +22,12 @@ function galaxyClicked(event) {
     galaxy.classList.add('button-small')
     progress.style.width = `${progress.getBoundingClientRect().width - adjustementValue}px`
     let adjustedProgressWidth = parseFloat(progress.style.width)
-    points.innerText = parseInt(points.innerText) + 1
+    let newPoints = await updateUserPointInDatabase()
+    points.innerText = newPoints
 
     if(timeId) {
         clearInterval(timeId)
     }
-    updateUserPointInDatabase(parseInt(points.innerText))
     updateProgressBar(adjustedProgressWidth)
 }
 
@@ -48,7 +48,7 @@ function updateProgressBar(adjustedProgressWidth) {
 }, 1000);
 }
 
-async function updateUserPointInDatabase(points) {
+async function updateUserPointInDatabase() {
     const url = '/twa-galaxy-tap/src/controllers/HandleClickProgressContr.php'
     try {
         const response = await fetch(url, {
@@ -56,7 +56,7 @@ async function updateUserPointInDatabase(points) {
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
                 },
-            body: JSON.stringify({'points': points}),
+            body: JSON.stringify({'clicked': true}),
         })
     
         if (!response.ok) {
@@ -64,6 +64,9 @@ async function updateUserPointInDatabase(points) {
         }
     
         const data = await response.json();
+        return data.points
+        
+        
     } catch (e) {
         console.error('Error:', e)       
     }
