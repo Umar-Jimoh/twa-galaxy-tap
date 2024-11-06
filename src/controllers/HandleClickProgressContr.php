@@ -20,9 +20,11 @@ class HandleClickProgressContr
             $payload = file_get_contents('php://input');
             $dataArray = json_decode($payload, true);
 
-            $userPoints = $this->db->getUserPoints($_SESSION['id']);
+            if ($dataArray['clicked']) {
+                $newPoints = $this->db->updateUserPoints($_SESSION['id']); 
+            }
 
-            JsonView::render(['status' => 'success', 'points' => $userPoints['points']]);
+            JsonView::render(['status' => 'success', 'points' => $newPoints]);
         } catch (PDOException $e) {
             JsonView::render(['status' => 'failed', 'error' => $e->getMessage()]);
         }

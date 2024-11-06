@@ -88,7 +88,7 @@ class DBModel extends DBConfig
                 if ($this->userPoints) {
                     return $this->userPoints;
                 } else {
-                    $this->addUserPoints($id);
+                    return $this->addUserPoints($id);
                 }
             } catch (PDOException $e) {
                 JsonView::render(['status' => 'failed', 'error' => $e->getMessage()]);
@@ -110,6 +110,32 @@ class DBModel extends DBConfig
 
                 if ($stmt->execute()) {
                     return $this->getUserPoints($id);
+                }
+            } catch (PDOException $e) {
+                JsonView::render(['status' => 'failed', 'error' => $e->getMessage()]);
+            }
+        } else {
+            JsonView::render(['status' => 'failed', 'error' => $this->connInfo['error']]);
+        }
+    }
+
+    public function updateUserPoints($id)
+    {
+        $currPoints = $this->getUserPoints($id);
+        $newPoints = $currPoints['points'] + 1;
+
+        if ($this->connInfo['status'] === 'success') {
+            try {
+                $sql = "UPDATE User_Points SET points = :points WHERE id = :id";
+                $stmt = $this->conn->prepare($sql);
+
+                $id = $id;
+                $points = $newPoints;
+                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                $stmt->bindParam(':points', $points, PDO::PARAM_INT);
+
+                if ($stmt->execute()) {
+                    return $newPoints;
                 }
             } catch (PDOException $e) {
                 JsonView::render(['status' => 'failed', 'error' => $e->getMessage()]);
